@@ -29,6 +29,7 @@
           "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
           "http://packages.nuget.org/v1/FeedService.svc/": {},
           "https://api.nuget.org/v3/index.json": {},
+          "https://nuget.pkg.github.com/restaurant-technology-org/index.json": {},
           "https://nuget.rdisoftware.com/nuget/": {}
         },
         "frameworks": {

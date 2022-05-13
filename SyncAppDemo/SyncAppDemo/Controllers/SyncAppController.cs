@@ -16,9 +16,9 @@ namespace SyncAppDemo.Controllers
         }
 
         [HttpGet("/GetOrder")]
-        public string Get([FromHeader] string id)
+        public string Get()
         {
-            var responseTask = client.GetStringAsync($"https://api.agify.io?name={id}");
+            var responseTask = client.GetStringAsync($"http://localhost:9001");
             responseTask.Wait();
             var content = responseTask.Result;
 
