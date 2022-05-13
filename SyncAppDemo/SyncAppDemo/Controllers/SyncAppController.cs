@@ -18,7 +18,7 @@ namespace SyncAppDemo.Controllers
         [HttpGet("/GetOrder")]
         public string Get()
         {
-            var responseTask = client.GetStringAsync($"http://localhost:9001");
+            var responseTask = client.GetStringAsync($"http://localhost:9001/mock");
             responseTask.Wait();
             var content = responseTask.Result;
 
