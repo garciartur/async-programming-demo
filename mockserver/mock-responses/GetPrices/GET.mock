@@ -1,0 +1,18 @@
+HTTP/1.1 200 OK
+Content-Type: application/json; charset=utf-8
+Response-Delay: 5000
+
+[
+   {
+      "Id": 111,
+      "Price": 20.05
+   },
+   {
+      "Id": 222,
+      "Price": 10.20
+   },
+   {
+      "Id": 333,
+      "Price": 5.10
+   }
+]

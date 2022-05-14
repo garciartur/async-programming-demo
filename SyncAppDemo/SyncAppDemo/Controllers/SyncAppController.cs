@@ -1,4 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
+using System.Text.Json;
+
 
 namespace SyncAppDemo.Controllers
 {
@@ -16,13 +18,18 @@ namespace SyncAppDemo.Controllers
         }
 
         [HttpGet("/GetOrder")]
-        public string Get()
+        public Product Get()
         {
-            var responseTask = client.GetStringAsync($"http://localhost:9001/mock");
-            responseTask.Wait();
-            var content = responseTask.Result;
+            var responseProductTask = client.GetStringAsync($"http://localhost:9001/GETProducts");
+            responseProductTask.Wait();
+            var productsContent = responseProductTask.Result;
 
-            return content;
+            //var productList = JsonSerializer.Deserialize<Product[]>(productsContent);
+            var productTask = Task.Factory.StartNew(() => JsonSerializer.Deserialize<Product[]>(productsContent));
+            productTask.Wait();
+            var productList = productTask.Result; 
+
+            return productList[0];
         }
     }
 }
