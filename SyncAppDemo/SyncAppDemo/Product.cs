@@ -2,9 +2,9 @@
 {
     public class Product
     {
-        public int id {  get; set; }
-        public string product { get; set; }
-        //public float _price { get; set; }
-        //public int _quantity { get; set; }   
+        public int id { get; set; }
+        public string item { get; set; }
+        public float price { get; set; }
+        public int qty { get; set; }
     }
 }

@@ -5,14 +5,14 @@ Response-Delay: 5000
 [
    {
       "id": 111,
-      "product": "Product1"
+      "value": "Item1"
    },
    {
       "id": 222,
-      "product": "Product2"
+      "value": "Item2"
    },
    {
       "id": 333,
-      "product": "Product3"
+      "value": "Item3"
    }
 ]

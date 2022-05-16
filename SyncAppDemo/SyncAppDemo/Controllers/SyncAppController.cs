@@ -18,18 +18,50 @@ namespace SyncAppDemo.Controllers
         }
 
         [HttpGet("/GetOrder")]
-        public Product Get()
+        public Order GetOrder()
         {
-            var responseProductTask = client.GetStringAsync($"http://localhost:9001/GETProducts");
-            responseProductTask.Wait();
-            var productsContent = responseProductTask.Result;
+            //items
+            //items call
+            var responseItemsTask = client.GetStringAsync($"http://localhost:9001/GetItems");
+            responseItemsTask.Wait();
+            var itemsContent = responseItemsTask.Result;
 
-            //var productList = JsonSerializer.Deserialize<Product[]>(productsContent);
-            var productTask = Task.Factory.StartNew(() => JsonSerializer.Deserialize<Product[]>(productsContent));
-            productTask.Wait();
-            var productList = productTask.Result; 
+            //items deserialization
+            var deserializeItemsTask = Task.Factory.StartNew(() => JsonSerializer.Deserialize<Item[]>(itemsContent));
+            deserializeItemsTask.Wait();
+            var itemsList = deserializeItemsTask.Result;
 
-            return productList[0];
+            //prices
+            //prices call
+            var responsePricesTask = client.GetStringAsync($"http://localhost:9001/GetPrices");
+            responsePricesTask.Wait();
+            var pricesContent = responsePricesTask.Result;
+
+            //prices deserialization
+            var deserializePricesTask = Task.Factory.StartNew(() => JsonSerializer.Deserialize<Price[]>(pricesContent));
+            deserializePricesTask.Wait();
+            var pricesList = deserializePricesTask.Result;
+
+            //quantity
+            //quantity call
+            var responseQtyTask = client.GetStringAsync($"http://localhost:9001/GetQtys");
+            responseQtyTask.Wait();
+            var qtyContent = responseQtyTask.Result;
+
+            //quantity deserialization
+            var deserializeQtyTask = Task.Factory.StartNew(() => JsonSerializer.Deserialize<Quantity[]>(qtyContent));
+            deserializeQtyTask.Wait();
+            var qtyList = deserializeQtyTask.Result;
+
+            //instanciating Order return
+            OrderManager orderManager = new OrderManager(itemsList, pricesList, qtyList);
+            Order orderReturn = new Order()
+            {
+                _products = orderManager.GetProducts(),
+                _total = orderManager.GetTotal()
+            };
+
+            return orderReturn;
         }
     }
 }

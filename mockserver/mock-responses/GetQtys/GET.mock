@@ -4,15 +4,15 @@ Response-Delay: 5000
 
 [
    {
-      "Id": 111,
-      "Qty": 1
+      "id": 111,
+      "value": 1
    },
    {
-      "Id": 222,
-      "Qty": 2
+      "id": 222,
+      "value": 2
    },
    {
-      "Id": 333,
-      "Qty": 3
+      "id": 333,
+      "value": 3
    }
 ]
