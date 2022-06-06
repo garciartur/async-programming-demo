@@ -1,18 +1,45 @@
-﻿namespace SyncAppDemo
+﻿using System.Text.Json;
+
+namespace SyncAppDemo
 {
     public class OrderManager
     {
-        public Item[] _itemsList { get; set; }
-        public Price[] _pricesList { get; set; }
-        public Quantity[] _qtyList { get; set; }
-
+        public List<Item> _itemsList { get; set; }
+        public List<Price> _pricesList { get; set; }
+        public List<Quantity> _quantitiesList { get; set; }
         public List<Product> _productsList { get; set; }
+        private static readonly HttpClient _client = new HttpClient();
 
-        public OrderManager(Item[] itemsList, Price[] pricesList, Quantity[] qtyList)
+        public void GetItems()
         {
+            var responseItemsTask = _client.GetStringAsync($"http://localhost:9001/GetItems");
+            responseItemsTask.Wait();
+            var itemsContent = responseItemsTask.Result;
+
+            var itemsList = JsonSerializer.Deserialize<List<Item>>(itemsContent);
+
             _itemsList = itemsList;
+        }
+
+        public void GetPrices()
+        {
+            var responsePricesTask = _client.GetStringAsync($"http://localhost:9001/GetPrices");
+            responsePricesTask.Wait();
+            var pricesContent = responsePricesTask.Result;
+
+            var pricesList = JsonSerializer.Deserialize<List<Price>>(pricesContent);
+
             _pricesList = pricesList;
-            _qtyList = qtyList;
+        }
+
+        public void GetQuantities()
+        {
+            var responseQtyTask = _client.GetStringAsync($"http://localhost:9001/GetQuantities");
+            responseQtyTask.Wait();
+            var qtyContent = responseQtyTask.Result;
+
+            var quantitiesList = JsonSerializer.Deserialize<List<Quantity>>(qtyContent);
+            _quantitiesList = quantitiesList;
         }
 
         public List<Product> GetProducts()
@@ -32,7 +59,7 @@
                     }
                 }
 
-                foreach (var qty in _qtyList)
+                foreach (var qty in _quantitiesList)
                 {
                     if (qty.id == product.id)
                     {
@@ -45,6 +72,7 @@
             }
 
             _productsList = productsList;
+
             return productsList;
         }
 
