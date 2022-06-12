@@ -1,5 +1,6 @@
 ﻿using System.Text.Json;
 
+
 namespace SyncAppDemo
 {
     public class OrderManager
@@ -8,11 +9,16 @@ namespace SyncAppDemo
         public List<Price> _pricesList { get; set; }
         public List<Quantity> _quantitiesList { get; set; }
         public List<Product> _productsList { get; set; }
-        private static readonly HttpClient _client = new HttpClient();
+
+        private HttpClient _client { get; set; }
+
+        public OrderManager(){
+            _client = new HttpClient();
+        }
 
         public void GetItems()
         {
-            var responseItemsTask = _client.GetStringAsync($"http://localhost:9001/GetItems");
+            var responseItemsTask = _client.GetStringAsync($"http://localhost:3000/GetItems");
             responseItemsTask.Wait();
             var itemsContent = responseItemsTask.Result;
 
@@ -23,7 +29,7 @@ namespace SyncAppDemo
 
         public void GetPrices()
         {
-            var responsePricesTask = _client.GetStringAsync($"http://localhost:9001/GetPrices");
+            var responsePricesTask = _client.GetStringAsync($"http://localhost:3000/GetPrices");
             responsePricesTask.Wait();
             var pricesContent = responsePricesTask.Result;
 
@@ -34,7 +40,7 @@ namespace SyncAppDemo
 
         public void GetQuantities()
         {
-            var responseQtyTask = _client.GetStringAsync($"http://localhost:9001/GetQuantities");
+            var responseQtyTask = _client.GetStringAsync($"http://localhost:3000/GetQuantities");
             responseQtyTask.Wait();
             var qtyContent = responseQtyTask.Result;
 
